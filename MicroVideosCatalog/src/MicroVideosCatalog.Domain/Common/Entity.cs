@@ -2,7 +2,7 @@ namespace MicroVideosCatalog.Domain.Common;
 public abstract record Entity
 {
     public Guid Id { get; private set; }
-    public Entity() { }
+    public Entity() => Id = Guid.NewGuid();
     public Entity(Guid id) => Id = id;
 
     public void SetId(Guid id)
@@ -17,11 +17,6 @@ public abstract record Entity
         Id = Guid.Parse(id);
     }
 
-    protected Guid GenerateGuid()
-    {
-        Id = Guid.NewGuid();
-        return Id;
-    }
     private static void EnsureThatIsValidGuid(string id)
     {
         if (string.IsNullOrEmpty(id))
