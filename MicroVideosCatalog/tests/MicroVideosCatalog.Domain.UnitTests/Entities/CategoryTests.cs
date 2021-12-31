@@ -1,8 +1,3 @@
-using System;
-using FluentAssertions;
-using MicroVideosCatalog.Domain.Entities;
-using Xunit;
-
 namespace MicroVideosCatalog.Domain.UnitTests.Entities;
 
 public class CategoryTests

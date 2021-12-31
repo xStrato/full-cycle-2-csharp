@@ -1,10 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using FluentAssertions;
-using MicroVideosCatalog.Domain.Entities;
-using Xunit;
-
 namespace MicroVideosCatalog.Domain.UnitTests.Entities;
 
 public class GenreTests

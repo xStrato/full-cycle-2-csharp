@@ -1,9 +1,3 @@
-using System;
-using FluentAssertions;
-using MicroVideosCatalog.Domain.Entities;
-using MicroVideosCatalog.Domain.Enums;
-using Xunit;
-
 namespace MicroVideosCatalog.Domain.UnitTests.Entities;
 
 public class CastMemberTests
