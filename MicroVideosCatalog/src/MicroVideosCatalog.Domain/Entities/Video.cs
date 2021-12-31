@@ -51,14 +51,16 @@ public record Video : Entity
         YearLaunched = yearLaunched;
         Duration = duration;
     }
-
+    public void SetOpened(bool opened) => Opened = opened;
+    public void SetRating(string rating) => Rating = rating;
+    public void SetDuration(float duration) => Duration = duration;
+    public void SetDescription(string description) => Description = description;
     public void SetTitle(string title)
     {
         if (string.IsNullOrEmpty(title))
             throw new ArgumentException("'title' cannot be empty or null");
         Title = title;
     }
-    public void SetDescription(string description) => Description = description;
     public void SetYearLaunched(int yearLaunched)
     {
         if (yearLaunched >= 0 && yearLaunched <= 1700)
@@ -67,11 +69,11 @@ public record Video : Entity
             throw new ArgumentException("'yearLaunched' is greater than current year");
         YearLaunched = yearLaunched;
     }
-    public void SetOpened(bool opened) => Opened = opened;
-    public void SetRating(string rating) => Rating = rating;
-    public void SetDuration(float duration) => Duration = duration;
     public void Add<T>(T entity) where T : Entity
     {
+        if (entity is null)
+            throw new ArgumentException($"'{typeof(T).Name}' cannot be null");
+
         (entity switch
         {
             Category e => new Action<T>(_ => _categories.Add(e)),
@@ -81,15 +83,34 @@ public record Video : Entity
         })(entity);
     }
 
-
-    public void Set<T>(T entity) where T : Entity
+    public void Remove<T>(T entity) where T : Entity
     {
-        (entity switch
-        {
-            Category e => new Action<T>(_ => _categories.Add(e)),
-            Genre e => new Action<T>(_ => _genre.Add(e)),
-            CastMember e => new Action<T>(_ => _castMember.Add(e)),
-            _ => throw new ArgumentException($"type '{typeof(T).Name}' is not supported.")
-        })(entity);
+        EnsureSupportedListTypes<T>();
+
+        if (entity is null)
+            throw new ArgumentException($"'{typeof(T).Name}' cannot be null");
+
+        if (entity is Category e) _categories.Remove(e);
+        if (entity is Genre g) _genre.Remove(g);
+        if (entity is CastMember cm) _castMember.Remove(cm);
+    }
+
+    public void Set<T>(IList<T> entities) where T : Entity
+    {
+        EnsureSupportedListTypes<T>();
+        if (entities is null or { Count: <= 0 })
+            throw new ArgumentException($"'{typeof(IList<T>).Name}' cannot be empty or  null");
+
+        if (entities is IList<Category> e) _categories = e;
+        if (entities is IList<Genre> g) _genre = g;
+        if (entities is IList<CastMember> cm) _castMember = cm;
+    }
+
+    private static void EnsureSupportedListTypes<T>() where T : Entity
+    {
+        var type = typeof(T);
+        if (type == typeof(Category) || type == typeof(Genre) || type == typeof(CastMember))
+            return;
+        throw new ArgumentException($"type '{type.Name}' is not supported.");
     }
 }
