@@ -16,7 +16,7 @@ public class GenreTests
 
     [Fact]
     [Trait("Genre", "Domain/Entities")]
-    public void SetName_InvalidParams_ShouldThrowArgumentException()
+    public void SetName_InvalidNameParams_ShouldThrowArgumentException()
     {
         //Arrange
         var (id, name) = (Guid.NewGuid(), "Horror");
@@ -31,7 +31,7 @@ public class GenreTests
 
     [Fact]
     [Trait("Genre", "Domain/Entities")]
-    public void SetId_InvalidParams_ShouldThrowArgumentException()
+    public void SetId_InvalidGuidParams_ShouldThrowArgumentException()
     {
         //Arrange
         var (id, name) = (Guid.NewGuid(), "Horror");

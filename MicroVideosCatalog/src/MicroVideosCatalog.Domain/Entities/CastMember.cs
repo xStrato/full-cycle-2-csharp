@@ -28,7 +28,7 @@ public record CastMember : Entity
             throw new ArgumentException("'castMemberType' cannot be empty or null");
 
         if (Enum.TryParse<ECastMemberType>(castMemberType, out var parsedEnum) is false)
-            throw new ArgumentException($"'{castMemberType}' cannot be parsed as 'ECastMemberType'");
+            throw new ArgumentException($"'{castMemberType}' cannot be parsed as valid 'ECastMemberType'");
 
         CastMemberType = parsedEnum;
     }
