@@ -21,7 +21,7 @@ public class VideoTests
         var (title, desc, year, open) = ("Inception", "A intriguing movie indeed", 1990, true);
         Video v = new(title, desc, year, open);
         var errorMsg1 = "'id' cannot be empty or null";
-        var errorMsg2 = "'id' cannot have a default value";
+        var errorMsg2 = "'id' is not a valid Guid";
         //Act
         //Assert
         v.Should().NotBeNull();

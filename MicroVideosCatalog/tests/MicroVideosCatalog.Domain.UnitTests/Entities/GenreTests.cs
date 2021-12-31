@@ -37,7 +37,7 @@ public class GenreTests
         var (id, name) = (Guid.NewGuid(), "Horror");
         Genre g = new(id, name);
         var errorMsg1 = "'id' cannot be empty or null";
-        var errorMsg2 = "'id' cannot have a default value";
+        var errorMsg2 = "'id' is not a valid Guid";
         //Act
         //Assert
         g.Should().NotBeNull();

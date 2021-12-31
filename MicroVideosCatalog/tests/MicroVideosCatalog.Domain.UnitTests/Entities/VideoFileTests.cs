@@ -22,7 +22,7 @@ public class VideoFileTests
         //Act
         var vf = new VideoFile(id, title, duaration);
         var errorMsg1 = "'id' cannot be empty or null";
-        var errorMsg2 = "'id' cannot have a default value";
+        var errorMsg2 = "'id' is not a valid Guid";
         //Act
         //Assert
         vf.Should().NotBeNull();

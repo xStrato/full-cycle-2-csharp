@@ -21,8 +21,8 @@ public class CategoryTests
         //Arrange
         var (id, name) = (Guid.NewGuid(), "Horror");
         Category c = new(id, name);
-        var errorMsg = "'name' cannot be empty or null";
         //Act
+        var errorMsg = "'name' cannot be empty or null";
         //Assert
         c.Should().Invoking(_ => c.SetName(null)).Should().Throw<ArgumentException>().WithMessage(errorMsg);
         c.Should().Invoking(_ => c.SetName("")).Should().Throw<ArgumentException>().WithMessage(errorMsg);
@@ -36,7 +36,7 @@ public class CategoryTests
         var (id, name) = (Guid.NewGuid(), "Horror");
         Category c = new(id, name);
         var errorMsg1 = "'id' cannot be empty or null";
-        var errorMsg2 = "'id' cannot have a default value";
+        var errorMsg2 = "'id' is not a valid Guid";
         //Act
         //Assert
         c.Should().Invoking(_ => c.SetId(null)).Should().Throw<ArgumentException>().WithMessage(errorMsg1);

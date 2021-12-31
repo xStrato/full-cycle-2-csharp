@@ -36,7 +36,7 @@ public class CastMemberTests
         var (id, name, castMember) = (Guid.NewGuid(), "Horror", ECastMemberType.Type1);
         CastMember c = new(id, name, castMember);
         var errorMsg1 = "'id' cannot be empty or null";
-        var errorMsg2 = "'id' cannot have a default value";
+        var errorMsg2 = "'id' is not a valid Guid";
         //Act
         //Assert
         c.Should().Invoking(_ => c.SetId(null)).Should().Throw<ArgumentException>().WithMessage(errorMsg1);

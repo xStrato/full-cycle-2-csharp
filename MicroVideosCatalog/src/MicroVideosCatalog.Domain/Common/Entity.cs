@@ -22,7 +22,7 @@ public abstract record Entity
         if (string.IsNullOrEmpty(id))
             throw new ArgumentException("'id' cannot be empty or null");
         if (IsValidGuid(id))
-            throw new ArgumentException("'id' cannot have a default value");
+            throw new ArgumentException("'id' is not a valid Guid");
     }
     protected static bool IsValidGuid(string id) => Guid.TryParse(id, out var _);
 }
