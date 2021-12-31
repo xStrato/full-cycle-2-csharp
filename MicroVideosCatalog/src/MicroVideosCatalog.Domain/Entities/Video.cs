@@ -12,10 +12,12 @@ public record Video : Entity
     public float Duration { get; private set; }
     private IList<Category> _categories { get; set; } = new List<Category>();
     public ReadOnlyCollection<Category> Categories => new(_categories);
-    private IList<Genre> _genre { get; set; } = new List<Genre>();
-    public ReadOnlyCollection<Genre> Genres => new(_genre);
-    private IList<CastMember> _castMember { get; set; } = new List<CastMember>();
-    public ReadOnlyCollection<CastMember> CastMembers => new(_castMember);
+    private IList<Genre> _genres { get; set; } = new List<Genre>();
+    public ReadOnlyCollection<Genre> Genres => new(_genres);
+    private IList<CastMember> _castMembers { get; set; } = new List<CastMember>();
+    public ReadOnlyCollection<CastMember> CastMembers => new(_castMembers);
+    private IList<VideoFile> _videoFiles { get; set; } = new List<VideoFile>();
+    public ReadOnlyCollection<VideoFile> VideoFiles => new(_videoFiles);
 
     protected Video() { }
     public Video(Guid id, string title, string description, int yearLaunched, bool opened) : base(id)
