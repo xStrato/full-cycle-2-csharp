@@ -19,28 +19,28 @@ public record Genre : Entity
     public void SetName(string name)
     {
         if (string.IsNullOrEmpty(name))
-            throw new ArgumentException("'name' cannot be empty or null");
+            throw new ArgumentException($"'{nameof(name)}' cannot be empty or null");
         Name = name;
     }
 
     public void SetCategories(IList<Category> categories)
     {
         if (categories is null or { Count: <= 0 })
-            throw new ArgumentException("'categories' cannot be empty or null");
+            throw new ArgumentException($"'{nameof(categories)}' cannot be empty or null");
         _categories = categories;
     }
 
     public void AddCategory(Category category)
     {
         if (category is null)
-            throw new ArgumentException("'category' cannot be null");
+            throw new ArgumentException($"'{nameof(category)}' cannot be null");
         _categories.Add(category);
     }
 
     public void RemoveCategory(Category category)
     {
         if (category is null)
-            throw new ArgumentException("'category' cannot be null");
+            throw new ArgumentException($"'{nameof(category)}' cannot be null");
         _categories.Remove(category);
     }
 }

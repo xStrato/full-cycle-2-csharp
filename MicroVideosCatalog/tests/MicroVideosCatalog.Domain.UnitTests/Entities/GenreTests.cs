@@ -4,7 +4,7 @@ public class GenreTests
 {
     [Fact]
     [Trait("Genre", "Domain/Entities")]
-    public void Constructor_ValidParameters_ShouldCreateGenre()
+    public void Constructor_ValidParams_ShouldCreateGenre()
     {
         //Arrange
         var (id, name) = (Guid.NewGuid(), "Horror");
@@ -16,7 +16,7 @@ public class GenreTests
 
     [Fact]
     [Trait("Genre", "Domain/Entities")]
-    public void SetName_InvalidParameter_ShouldThrowArgumentException()
+    public void SetName_InvalidParams_ShouldThrowArgumentException()
     {
         //Arrange
         var (id, name) = (Guid.NewGuid(), "Horror");
@@ -31,7 +31,7 @@ public class GenreTests
 
     [Fact]
     [Trait("Genre", "Domain/Entities")]
-    public void SetId_InvalidParameter_ShouldThrowArgumentException()
+    public void SetId_InvalidParams_ShouldThrowArgumentException()
     {
         //Arrange
         var (id, name) = (Guid.NewGuid(), "Horror");
@@ -48,7 +48,22 @@ public class GenreTests
 
     [Fact]
     [Trait("Genre", "Domain/Entities")]
-    public void AddCategory_InvalidCategory_ShouldThrowArgumentException()
+    public void AddCategory_ValidCategory_ShouldAddValuesToList()
+    {
+        //Arrange
+        var (id, name) = (Guid.NewGuid(), "Horror");
+        Genre g = new(id, name);
+        //Act
+        g.AddCategory(new("Movie"));
+        g.AddCategory(new("Serie"));
+        //Assert
+        g.Should().NotBeNull();
+        g.Categories.Should().NotBeEmpty().And.HaveCount(2);
+    }
+
+    [Fact]
+    [Trait("Genre", "Domain/Entities")]
+    public void AddCategory_InvalidNullCategory_ShouldThrowArgumentException()
     {
         //Arrange
         var (id, name) = (Guid.NewGuid(), "Horror");
@@ -62,7 +77,23 @@ public class GenreTests
 
     [Fact]
     [Trait("Genre", "Domain/Entities")]
-    public void RemoveCategory_InvalidCategory_ShouldThrowArgumentException()
+    public void RemoveCategory_ValidCategory_ShouldRemoveValuesFromList()
+    {
+        //Arrange
+        var (id, name) = (Guid.NewGuid(), "Horror");
+        Genre g = new(id, name);
+        Category c = new("Movie");
+        g.AddCategory(c);
+        g.AddCategory(new("Serie"));
+        //Act
+        g.RemoveCategory(c);
+        //Assert
+        g.Should().NotBeNull();
+        g.Categories.Should().NotBeEmpty().And.HaveCount(1);
+    }
+    [Fact]
+    [Trait("Genre", "Domain/Entities")]
+    public void RemoveCategory_InvalidNullCategory_ShouldThrowArgumentException()
     {
         //Arrange
         var (id, name) = (Guid.NewGuid(), "Horror");
@@ -76,7 +107,22 @@ public class GenreTests
 
     [Fact]
     [Trait("Genre", "Domain/Entities")]
-    public void SetCategories_InvalidCategories_ShouldThrowArgumentException()
+    public void SetCategories_ValidCategories_ShouldSetNewEntryValues()
+    {
+        //Arrange
+        var (id, name) = (Guid.NewGuid(), "Horror");
+        Genre g = new(id, name);
+        var categories = new List<Category> { new("Movie"), new("Serie") };
+        //Act
+        g.SetCategories(categories);
+        //Assert
+        g.Should().NotBeNull();
+        g.Categories.Should().NotBeEmpty().And.HaveCount(2);
+        g.Categories.Should().BeEquivalentTo(categories);
+    }
+    [Fact]
+    [Trait("Genre", "Domain/Entities")]
+    public void SetCategories_InvalidEmptyAndNullCategories_ShouldThrowArgumentException()
     {
         //Arrange
         var (id, name) = (Guid.NewGuid(), "Horror");

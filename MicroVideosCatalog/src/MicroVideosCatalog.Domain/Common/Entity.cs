@@ -20,9 +20,9 @@ public abstract record Entity
     private static void EnsureThatIsValidGuid(string id)
     {
         if (string.IsNullOrEmpty(id))
-            throw new ArgumentException("'id' cannot be empty or null");
+            throw new ArgumentException($"'{nameof(id)}' cannot be empty or null");
         if (IsValidGuid(id))
-            throw new ArgumentException("'id' is not a valid Guid");
+            throw new ArgumentException($"'{nameof(id)}' is not a valid Guid");
     }
     protected static bool IsValidGuid(string id) => Guid.TryParse(id, out var _);
 }

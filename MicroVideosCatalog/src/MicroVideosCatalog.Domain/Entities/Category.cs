@@ -11,7 +11,7 @@ public record Category : Entity
     public void SetName(string name)
     {
         if (string.IsNullOrEmpty(name))
-            throw new ArgumentException("'name' cannot be empty or null");
+            throw new ArgumentException($"'{nameof(name)}' cannot be empty or null");
         Name = name;
     }
 }
