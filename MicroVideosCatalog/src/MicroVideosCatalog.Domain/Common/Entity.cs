@@ -1,7 +1,7 @@
 namespace MicroVideosCatalog.Domain.Common;
 public abstract record Entity
 {
-    protected Guid Id { get; private set; }
+    public Guid Id { get; private set; }
     protected Entity() => Id = Guid.NewGuid();
     protected Entity(Guid id) => Id = id;
 
