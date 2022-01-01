@@ -20,14 +20,14 @@ public record Video : Entity
     public ReadOnlyCollection<VideoFile> VideoFiles => new(_videoFiles);
 
     protected Video() : base() { }
-    public Video(Guid id, string title, string description, int yearLaunched, bool opened) : base(id)
+    public Video(string title, string description, int yearLaunched, bool opened) : base()
     {
         Title = title;
         Description = description;
         YearLaunched = yearLaunched;
         Opened = opened;
     }
-    public Video(string title, string description, int yearLaunched, bool opened) : base()
+    public Video(Guid id, string title, string description, int yearLaunched, bool opened) : base(id)
     {
         Title = title;
         Description = description;
@@ -88,35 +88,39 @@ public record Video : Entity
     }
     public void Add<T>(T entity) where T : Entity
     {
+        EnsureSupportedListTypes<T>();
+        if (entity is null)
+            throw new ArgumentException($"'{typeof(T).Name}' cannot be null");
+
+        if (entity is Category e && _categories.Contains(e) is false)
+            _categories.Add(e);
+
+        if (entity is Genre g && _genres.Contains(g) is false)
+            _genres.Add(g);
+
+        if (entity is CastMember cm && _castMembers.Contains(cm) is false)
+            _castMembers.Add(cm);
+    }
+
+    public void Remove<T>(T entity) where T : Entity
+    {
         if (entity is null)
             throw new ArgumentException($"'{typeof(T).Name}' cannot be null");
 
         (entity switch
         {
-            Category e => new Action<T>(_ => _categories.Add(e)),
-            Genre e => new Action<T>(_ => _genres.Add(e)),
-            CastMember e => new Action<T>(_ => _castMembers.Add(e)),
-            _ => throw new ArgumentException($"type '{typeof(T).Name}' is not supported.")
+            Category e => new Action<T>(_ => _categories.Remove(e)),
+            Genre e => new Action<T>(_ => _genres.Remove(e)),
+            CastMember e => new Action<T>(_ => _castMembers.Remove(e)),
+            _ => throw new ArgumentException($"type '{typeof(T).Name}' is not supported")
         })(entity);
-    }
-
-    public void Remove<T>(T entity) where T : Entity
-    {
-        EnsureSupportedListTypes<T>();
-
-        if (entity is null)
-            throw new ArgumentException($"'{typeof(T).Name}' cannot be null");
-
-        if (entity is Category e) _categories.Remove(e);
-        if (entity is Genre g) _genres.Remove(g);
-        if (entity is CastMember cm) _castMembers.Remove(cm);
     }
 
     public void Set<T>(IList<T> entities) where T : Entity
     {
         EnsureSupportedListTypes<T>();
         if (entities is null or { Count: <= 0 })
-            throw new ArgumentException($"'{typeof(IList<T>).Name}' cannot be empty or  null");
+            throw new ArgumentException($"'{typeof(IList<T>).Name}' cannot be empty or null");
 
         if (entities is IList<Category> e) _categories = e;
         if (entities is IList<Genre> g) _genres = g;
@@ -130,7 +134,6 @@ public record Video : Entity
             return;
         throw new ArgumentException($"type '{type.Name}' is not supported.");
     }
-
 
     public Video CreateVideoWithFiles(string title, string description, int yearLaunched, float duration, IList<Category> categories, IList<Genre> genres, IList<CastMember> castMembers, IList<VideoFile> videoFiles)
     {

@@ -3,7 +3,7 @@ public class VideoTests
 {
     [Fact]
     [Trait("Video", "Domain/Entities")]
-    public void Constructor_ValidParameters_ShouldCreateVideo()
+    public void Constructor_ValidParams_ShouldCreateVideo()
     {
         //Arrange
         var (title, desc, year, open) = ("Inception", "A intriguing movie indeed", 1990, true);
@@ -15,7 +15,7 @@ public class VideoTests
 
     [Fact]
     [Trait("Video", "Domain/Entities")]
-    public void SetId_InvalidParameter_ShouldThrowArgumentException()
+    public void SetId_InvalidGuidParams_ShouldThrowArgumentException()
     {
         //Arrange
         var (title, desc, year, open) = ("Inception", "A intriguing movie indeed", 1990, true);
@@ -32,7 +32,7 @@ public class VideoTests
 
     [Fact]
     [Trait("Video", "Domain/Entities")]
-    public void SetTitle_InvalidParameter_ShouldThrowArgumentException()
+    public void SetTitle_InvalidTitleParams_ShouldThrowArgumentException()
     {
         //Arrange
         var (title, desc, year, open) = ("Inception", "A intriguing movie indeed", 1990, true);
@@ -47,7 +47,7 @@ public class VideoTests
 
     [Fact]
     [Trait("Video", "Domain/Entities")]
-    public void SetYearLaunched_InvalidParameter_ShouldThrowArgumentException()
+    public void SetYearLaunched_InvalidYearLaunchedParams_ShouldThrowArgumentException()
     {
         //Arrange
         var (title, desc, year, open) = ("Inception", "A intriguing movie indeed", 1990, true);
@@ -64,7 +64,7 @@ public class VideoTests
 
     [Fact]
     [Trait("Video", "Domain/Entities")]
-    public void AddT_ValidParameter_ShouldAddEntitiesToTheirLists()
+    public void AddT_ValidAndUniqueEntitiesParams_ShouldAddEntitiesToTheirLists()
     {
         //Arrange
         var (title, desc, year, open) = ("Inception", "A intriguing movie indeed", 1990, true);
@@ -72,10 +72,13 @@ public class VideoTests
 
         var category = new Category("Film");
         var genre = new Genre("Action");
-        var castMember = new CastMember("Di Caprio", ECastMemberType.Type1);
+        var castMember = new CastMember("DiCaprio", ECastMemberType.Type1);
         //Act
         video.Add(category);
         video.Add(genre);
+        video.Add(genre);
+        video.Add(castMember);
+        video.Add(castMember);
         video.Add(castMember);
         //Assert
         video.Should().NotBeNull();
@@ -86,7 +89,7 @@ public class VideoTests
 
     [Fact]
     [Trait("Video", "Domain/Entities")]
-    public void AddT_InvalidNullParameter_ShouldThrowArgumentException()
+    public void AddT_InvalidNullEntitiesParams_ShouldThrowArgumentException()
     {
         //Arrange
         var (title, desc, year, open) = ("Inception", "A intriguing movie indeed", 1990, true);
@@ -108,7 +111,7 @@ public class VideoTests
 
     [Fact]
     [Trait("Video", "Domain/Entities")]
-    public void RemoveT_ValidParameter_ShouldRemoveEntitiesFromTheirLists()
+    public void RemoveT_ValidEntitiesParams_ShouldRemoveEntitiesFromTheirLists()
     {
         //Arrange
         var (title, desc, year, open) = ("Inception", "A intriguing movie indeed", 1990, true);
@@ -116,13 +119,14 @@ public class VideoTests
 
         var category = new Category("Film");
         var genre = new Genre("Action");
-        var castMember = new CastMember("Di Caprio", ECastMemberType.Type1);
+        var castMember = new CastMember("DiCaprio", ECastMemberType.Type1);
         video.Add(category);
         video.Add(genre);
         video.Add(castMember);
         //Act
         video.Remove(category);
         video.Remove(genre);
+        video.Remove(castMember);
         video.Remove(castMember);
         //Assert
         video.Should().NotBeNull();
@@ -132,7 +136,7 @@ public class VideoTests
     }
     [Fact]
     [Trait("Video", "Domain/Entities")]
-    public void RemoveT_InvalidNullParameter_ShouldThrowArgumentException()
+    public void RemoveT_InvalidNullParams_ShouldThrowArgumentException()
     {
         //Arrange
         var (title, desc, year, open) = ("Inception", "A intriguing movie indeed", 1990, true);
@@ -153,28 +157,28 @@ public class VideoTests
     }
     [Fact]
     [Trait("Video", "Domain/Entities")]
-    public void SetT_ValidParameter_ShouldSetEntitiesToCorrespondingLists()
+    public void SetT_ValidEntitiesParams_ShouldSetEntitiesToCorrespondingLists()
     {
         //Arrange
         var (title, desc, year, open) = ("Inception", "A intriguing movie indeed", 1990, true);
         var video = new Video(title, desc, year, open);
 
-        var categories = new List<Category> { new("Film1"), new("Film2"), new("Film3") };
-        var genres = new List<Genre> { new("Action1"), new("Action2"), new("Action3") };
-        var castMembers = new List<CastMember> { new("Di Caprio1", ECastMemberType.Type1), new("Di Caprio2", ECastMemberType.Type1), new("Di Caprio3", ECastMemberType.Type1) };
+        var categories = new List<Category> { new("Film1") };
+        var genres = new List<Genre> { new("Action1"), new("Action2") };
+        var castMembers = new List<CastMember> { new("DiCaprio1", ECastMemberType.Type1), new("DiCaprio2", ECastMemberType.Type1), new("DiCaprio3", ECastMemberType.Type1) };
         //Act
         video.Set(categories);
         video.Set(genres);
         video.Set(castMembers);
         //Assert
         video.Should().NotBeNull();
-        video.Categories.Should().NotBeEmpty().And.HaveCount(3);
-        video.Genres.Should().NotBeEmpty().And.HaveCount(3);
+        video.Categories.Should().NotBeEmpty().And.HaveCount(1);
+        video.Genres.Should().NotBeEmpty().And.HaveCount(2);
         video.CastMembers.Should().NotBeEmpty().And.HaveCount(3);
     }
     [Fact]
     [Trait("Video", "Domain/Entities")]
-    public void SetT_InvalidNullParameter_ShouldThrowArgumentException()
+    public void SetT_InvalidNullParams_ShouldThrowArgumentException()
     {
         //Arrange
         var (title, desc, year, open) = ("Inception", "A intriguing movie indeed", 1990, true);
@@ -184,13 +188,16 @@ public class VideoTests
         IList<Genre> genres = null;
         IList<CastMember> castMembers = null;
         //Act
-        var errorMsg1 = $"'{typeof(IList<Category>).Name}' cannot be empty or  null";
-        var errorMsg2 = $"'{typeof(IList<Genre>).Name}' cannot be empty or  null";
-        var errorMsg3 = $"'{typeof(IList<CastMember>).Name}' cannot be empty or  null";
+        var errorMsg1 = $"'{typeof(IList<Category>).Name}' cannot be empty or null";
+        var errorMsg2 = $"'{typeof(IList<Genre>).Name}' cannot be empty or null";
+        var errorMsg3 = $"'{typeof(IList<CastMember>).Name}' cannot be empty or null";
         //Assert
         v.Should().NotBeNull();
         v.Should().Invoking(_ => v.Set(categories)).Should().Throw<ArgumentException>().WithMessage(errorMsg1);
         v.Should().Invoking(_ => v.Set(genres)).Should().Throw<ArgumentException>().WithMessage(errorMsg2);
         v.Should().Invoking(_ => v.Set(castMembers)).Should().Throw<ArgumentException>().WithMessage(errorMsg3);
+        v.Should().Invoking(_ => v.Set(new List<Category>())).Should().Throw<ArgumentException>().WithMessage(errorMsg1);
+        v.Should().Invoking(_ => v.Set(new List<Genre>())).Should().Throw<ArgumentException>().WithMessage(errorMsg2);
+        v.Should().Invoking(_ => v.Set(new List<CastMember>())).Should().Throw<ArgumentException>().WithMessage(errorMsg3);
     }
 }
