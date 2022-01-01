@@ -1,6 +1,3 @@
-using MicroVideosCatalog.Domain.Common;
-using MicroVideosCatalog.Domain.Enums;
-
 namespace MicroVideosCatalog.Domain.Entities;
 public record CastMember : Entity
 {

@@ -4,10 +4,10 @@ public class VideoFileTests
 {
     [Fact]
     [Trait("VideoFile", "Domain/Entities")]
-    public void Constructor_ValidParameters_ShouldCreateVideoFile()
+    public void Constructor_ValidParams_ShouldCreateVideoFile()
     {
         //Arrange
-        var (id, title, duaration) = (Guid.NewGuid(), "123456.mp4", 1.30f);
+        var (id, title, duaration) = (Guid.NewGuid(), "Inception.mp4", 1.30f);
         //Act
         var videoFile = new VideoFile(id, title, duaration);
         //Assert
@@ -15,10 +15,10 @@ public class VideoFileTests
     }
     [Fact]
     [Trait("VideoFile", "Domain/Entities")]
-    public void SetId_InvalidParameter_ShouldThrowArgumentException()
+    public void SetId_InvalidGuidParams_ShouldThrowArgumentException()
     {
         //Arrange
-        var (id, title, duaration) = (Guid.NewGuid(), "123456.mp4", 1.30f);
+        var (id, title, duaration) = (Guid.NewGuid(), "Inception.mp4", 1.30f);
         //Act
         var vf = new VideoFile(id, title, duaration);
         var errorMsg1 = "'id' cannot be empty or null";
@@ -32,10 +32,10 @@ public class VideoFileTests
     }
     [Fact]
     [Trait("VideoFile", "Domain/Entities")]
-    public void SetTitle_InvalidNullAndEmptyParameter_ShouldThrowArgumentException()
+    public void SetTitle_InvalidNullAndEmptyParams_ShouldThrowArgumentException()
     {
         //Arrange
-        var (id, title, duaration) = (Guid.NewGuid(), "123456.mp4", 1.30f);
+        var (id, title, duaration) = (Guid.NewGuid(), "Inception.mp4", 1.30f);
         //Act
         var vf = new VideoFile(id, title, duaration);
         var errorMsg = "'title' cannot be empty or null";

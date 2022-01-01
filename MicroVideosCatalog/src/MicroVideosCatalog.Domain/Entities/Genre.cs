@@ -1,6 +1,3 @@
-using System.Collections.ObjectModel;
-using MicroVideosCatalog.Domain.Common;
-
 namespace MicroVideosCatalog.Domain.Entities;
 
 public record Genre : Entity

@@ -1,5 +1,3 @@
-using MicroVideosCatalog.Domain.Common;
-
 namespace MicroVideosCatalog.Domain.Entities;
 public record Category : Entity
 {
