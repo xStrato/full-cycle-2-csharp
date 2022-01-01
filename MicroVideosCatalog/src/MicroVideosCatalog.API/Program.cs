@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using MicroVideosCatalog.Infrastructure.Data.Contexts;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<VideoCatalogContext>(c => c.UseSqlite(builder.Configuration.GetConnectionString("Sqlite"), b => b.MigrationsAssembly("MicroVideosCatalog.API")));
 
 var app = builder.Build();
 

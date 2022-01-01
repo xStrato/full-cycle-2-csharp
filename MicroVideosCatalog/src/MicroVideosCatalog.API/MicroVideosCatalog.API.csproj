@@ -8,6 +8,11 @@
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MicroVideosCatalog.Infrastructure\MicroVideosCatalog.Infrastructure.csproj" />
+  </ItemGroup>
 </Project>
