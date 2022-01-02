@@ -2,6 +2,9 @@ namespace MicroVideosCatalog.Application.Categories.Handlers;
 public record CategoryCommandHandler : IRequestCommandHandler<CreateCategoryCommand, GenericResult>
 {
     public ICategoryRepository _categoryRepository { get; init; }
+    public CategoryCommandHandler(ICategoryRepository categoryRepository)
+        => _categoryRepository = categoryRepository;
+
     public async Task<GenericResult> HandleAsync(CreateCategoryCommand command, CancellationToken ct = default)
     {
         if (command.IsValid() is false)
