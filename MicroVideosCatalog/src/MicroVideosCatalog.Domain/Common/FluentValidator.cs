@@ -20,5 +20,7 @@ public abstract record FluentValidator<T> where T : class
         return _validationResult.IsValid;
     }
     public IEnumerable<ValidationFailure> GetValidationErros() => _validationResult.Errors;
+    public IEnumerable<(string Property, string Message)> GetErrosFormatted()
+        => GetValidationErros().Select(e => (e.PropertyName, e.ErrorMessage));
     protected sealed class Validator : AbstractValidator<T> { }
 }
