@@ -1,5 +1,9 @@
 # MicroVideosCatalog
 ---
+### Adopted development approaches:
+ - DDD
+ - CQRS
+---
 ### Running Migrations with EF Core 6:
 #### Generate migration:
 ```
