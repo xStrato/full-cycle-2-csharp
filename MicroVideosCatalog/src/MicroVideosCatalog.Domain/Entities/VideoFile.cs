@@ -1,6 +1,6 @@
 namespace MicroVideosCatalog.Domain.Entities;
 
-public record VideoFile : Entity
+public record VideoFile : Entity<VideoFile>, IAggegateRoot
 {
     public string Title { get; private set; }
     public float Duration { get; private set; }
@@ -29,6 +29,14 @@ public record VideoFile : Entity
         Duration = duration;
         Url = url;
     }
+
+    protected override void ConfigureValidations(Validator ruler)
+    {
+        ruler.RuleFor(e => e.Id).NotEmpty().NotNull();
+        ruler.RuleFor(e => e.Title).NotEmpty().NotNull();
+        ruler.RuleFor(e => e.Duration).NotEmpty().NotNull();
+    }
+
     public void SetDuration(float duration) => Duration = duration;
     public void SetUrl(string url) => Url = url;
     public void SetTitle(string title)

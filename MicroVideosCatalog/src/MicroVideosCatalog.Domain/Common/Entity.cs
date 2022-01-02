@@ -1,5 +1,5 @@
 namespace MicroVideosCatalog.Domain.Common;
-public abstract record Entity
+public abstract record Entity<T> : FluentValidator<T> where T : class
 {
     public Guid Id { get; private set; }
     protected Entity() => Id = Guid.NewGuid();

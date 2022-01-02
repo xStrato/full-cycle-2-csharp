@@ -1,5 +1,5 @@
 namespace MicroVideosCatalog.Domain.Entities;
-public record Video : Entity
+public record Video : Entity<Video>, IAggegateRoot
 {
     public string Title { get; private set; }
     public string Description { get; private set; }
@@ -65,6 +65,16 @@ public record Video : Entity
         _genres = genres;
         _castMembers = castMembers;
     }
+
+    protected override void ConfigureValidations(Validator ruler)
+    {
+        ruler.RuleFor(e => e.Id).NotEmpty().NotNull();
+        ruler.RuleFor(e => e.Title).NotEmpty().NotNull();
+        ruler.RuleFor(e => e.Description).NotEmpty().NotNull();
+        ruler.RuleFor(e => e.YearLaunched).NotEmpty().NotNull();
+        ruler.RuleFor(e => e.Opened).NotEmpty().NotNull();
+    }
+
     public void SetOpened(bool opened) => Opened = opened;
     public void SetRating(string rating) => Rating = rating;
     public void SetDuration(float duration) => Duration = duration;
@@ -83,7 +93,7 @@ public record Video : Entity
             throw new ArgumentException("'yearLaunched' is greater than current year");
         YearLaunched = yearLaunched;
     }
-    public void Add<T>(T entity) where T : Entity
+    public void Add<T>(T entity) where T : IAggegateRoot
     {
         EnsureSupportedListTypes<T>();
         if (entity is null)
@@ -99,7 +109,7 @@ public record Video : Entity
             _castMembers.Add(cm);
     }
 
-    public void Remove<T>(T entity) where T : Entity
+    public void Remove<T>(T entity) where T : IAggegateRoot
     {
         if (entity is null)
             throw new ArgumentException($"'{typeof(T).Name}' cannot be null");
@@ -113,7 +123,7 @@ public record Video : Entity
         })(entity);
     }
 
-    public void Set<T>(IList<T> entities) where T : Entity
+    public void Set<T>(IList<T> entities) where T : IAggegateRoot
     {
         EnsureSupportedListTypes<T>();
         if (entities is null or { Count: <= 0 })
@@ -124,7 +134,7 @@ public record Video : Entity
         if (entities is IList<CastMember> cm) _castMembers = cm;
     }
 
-    private static void EnsureSupportedListTypes<T>() where T : Entity
+    private static void EnsureSupportedListTypes<T>() where T : IAggegateRoot
     {
         var type = typeof(T);
         if (type == typeof(Category) || type == typeof(Genre) || type == typeof(CastMember))

@@ -1,6 +1,6 @@
 namespace MicroVideosCatalog.Domain.Entities;
 
-public record Genre : Entity
+public record Genre : Entity<Genre>, IAggegateRoot
 {
     public string Name { get; private set; }
     private IList<Category> _categories { get; set; } = new List<Category>();
@@ -12,6 +12,12 @@ public record Genre : Entity
         => (Name, _categories) = (name, categories);
     public Genre(Guid id, string name, IList<Category> categories) : base(id)
         => (Name, _categories) = (name, categories);
+
+    protected override void ConfigureValidations(Validator ruler)
+    {
+        ruler.RuleFor(e => e.Id).NotEmpty().NotNull();
+        ruler.RuleFor(e => e.Name).NotEmpty().NotNull();
+    }
 
     public void SetName(string name)
     {

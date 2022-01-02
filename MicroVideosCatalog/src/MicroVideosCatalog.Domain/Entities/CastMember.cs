@@ -1,5 +1,5 @@
 namespace MicroVideosCatalog.Domain.Entities;
-public record CastMember : Entity
+public record CastMember : Entity<CastMember>, IAggegateRoot
 {
     public string Name { get; private set; }
     public ECastMemberType CastMemberType { get; private set; }
@@ -9,6 +9,11 @@ public record CastMember : Entity
     public CastMember(Guid id, string name, ECastMemberType castMemberType) : base(id)
         => (Name, CastMemberType) = (name, castMemberType);
 
+    protected override void ConfigureValidations(Validator ruler)
+    {
+        ruler.RuleFor(e => e.Id).NotEmpty().NotNull();
+        ruler.RuleFor(e => e.Name).NotEmpty().NotNull();
+    }
     public void SetName(string name)
     {
         if (string.IsNullOrEmpty(name))
