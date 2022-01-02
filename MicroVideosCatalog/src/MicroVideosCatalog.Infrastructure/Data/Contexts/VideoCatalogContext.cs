@@ -1,6 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using MicroVideosCatalog.Domain.Entities;
-
 namespace MicroVideosCatalog.Infrastructure.Data.Contexts;
 public class VideoCatalogContext : DbContext
 {

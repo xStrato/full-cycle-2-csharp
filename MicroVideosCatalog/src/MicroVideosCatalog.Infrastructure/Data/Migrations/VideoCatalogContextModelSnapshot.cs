@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace MicroVideosCatalog.API.Migrations
+namespace MicroVideosCatalog.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(VideoCatalogContext))]
     partial class VideoCatalogContextModelSnapshot : ModelSnapshot

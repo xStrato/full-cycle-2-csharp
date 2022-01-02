@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace MicroVideosCatalog.API.Migrations
+namespace MicroVideosCatalog.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(VideoCatalogContext))]
-    [Migration("20220101215535_InitialCreation")]
-    partial class InitialCreation
+    [Migration("20220102015741_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
