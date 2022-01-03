@@ -1,0 +1,13 @@
+global using System;
+global using System.Collections.Generic;
+global using System.Linq;
+global using FluentAssertions;
+global using Xunit;
+global using MicroVideosCatalog.Domain.Interfaces;
+global using MicroVideosCatalog.Application.Categories.Commands;
+global using MicroVideosCatalog.Application.Categories.Handlers;
+global using Moq;
+global using Moq.AutoMock;
+global using MicroVideosCatalog.Domain.Entities;
+global using System.Threading;
+global using System.Threading.Tasks;
