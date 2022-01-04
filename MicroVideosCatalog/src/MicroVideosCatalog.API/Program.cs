@@ -1,6 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using MicroVideosCatalog.Infrastructure.Data.Contexts;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

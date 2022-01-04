@@ -4,3 +4,5 @@ global using MicroVideosCatalog.Domain.Common;
 global using MicroVideosCatalog.Application.Categories.Commands;
 global using MicroVideosCatalog.Domain.Entities;
 global using MicroVideosCatalog.Domain.Interfaces;
+global using System.Reflection;
+global using Microsoft.Extensions.DependencyInjection;
