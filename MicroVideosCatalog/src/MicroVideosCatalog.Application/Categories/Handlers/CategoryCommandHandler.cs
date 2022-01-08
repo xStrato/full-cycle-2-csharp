@@ -12,7 +12,7 @@ public record CategoryCommandHandler : IRequestCommandHandler<CreateCategoryComm
 
         var category = new Category(command.Name);
         await _categoryRepository.AddAsync(category, ct);
-        var commited = await _categoryRepository.UnitOfWork.Commit();
+        var commited = await _categoryRepository.UnitOfWork.Commit(ct);
 
         if (commited is false)
             return new(false, string.Format("{0} cannot be fully executed", command.CommandType), new { Message = "database commit failed" });

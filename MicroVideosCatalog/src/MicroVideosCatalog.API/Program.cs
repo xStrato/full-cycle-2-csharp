@@ -1,3 +1,5 @@
+using MicroVideosCatalog.Application.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,6 +9,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<VideoCatalogContext>(c => c.UseSqlite(builder.Configuration.GetConnectionString("Sqlite")));
+
+builder.Services.AddAppDependencies();
 
 var app = builder.Build();
 

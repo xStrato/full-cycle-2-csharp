@@ -20,7 +20,7 @@ public class CategoryCommandHandlerTests
         _handler = mock.CreateInstance<CategoryCommandHandler>();
         _categoryRepository = mock.GetMock<ICategoryRepository>();
 
-        _categoryRepository.Setup(r => r.UnitOfWork.Commit()).ReturnsAsync(true);
+        _categoryRepository.Setup(r => r.UnitOfWork.Commit(It.IsAny<CancellationToken>())).ReturnsAsync(true);
         _categoryRepository.Setup(r => r.AddAsync(It.IsAny<Category>(), CancellationToken.None))
             .Callback<Category, CancellationToken>((t, _) => _categories.Add(t));
     }
@@ -42,7 +42,7 @@ public class CategoryCommandHandlerTests
         result.Message.Should().Be(string.Format("{0} was successfully executed", command.CommandType));
         result.Data.Should().NotBeNull().And.BeOfType<Category>();
         _categories.Should().HaveCount(6);
-        _categoryRepository.Verify(r => r.UnitOfWork.Commit(), Times.Once);
+        _categoryRepository.Verify(r => r.UnitOfWork.Commit(It.IsAny<CancellationToken>()), Times.Once);
         _categoryRepository.Verify(r => r.AddAsync(createdCategory, CancellationToken.None), Times.Once);
     }
 
@@ -59,7 +59,7 @@ public class CategoryCommandHandlerTests
         result.Message.Should().Be(string.Format("{0} state is invalid", command.CommandType));
         result.Data.Should().NotBeNull().And.BeOfType<List<(string, string)>>();
         _categories.Should().HaveCount(5);
-        _categoryRepository.Verify(r => r.UnitOfWork.Commit(), Times.Never);
+        _categoryRepository.Verify(r => r.UnitOfWork.Commit(It.IsAny<CancellationToken>()), Times.Never);
         _categoryRepository.Verify(r => r.AddAsync(It.IsAny<Category>(), CancellationToken.None), Times.Never);
     }
 }
